@@ -51,13 +51,5 @@ namespace ZantosMvc.Controllers
             return View(usersWithRoles);
         }
 
-        /*public IActionResult Index()
-        {  
-            var user = userManager.FindByIdAsync("7f8f7fd7-a160-479c-99e0-ad7a85641441");
-            // var roles = userManager.GetRolesAsync(user);
-
-            return View(user);
-
-        }  */
     }  
 }  
