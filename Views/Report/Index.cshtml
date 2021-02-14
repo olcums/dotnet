@@ -1,0 +1,61 @@
+@model IEnumerable<ZantosMvc.Models.Report>
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+@if ((await AuthorizationService.AuthorizeAsync(User, "writepolicy")).Succeeded)
+{
+    <a asp-action="Create">Create New</a>
+}  
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Link)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                <a href="@Html.DisplayFor(modelItem => item.Link)">Link</a>
+            </td>
+            <td>
+                @if ((await AuthorizationService.AuthorizeAsync(User, "writepolicy")).Succeeded)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <html>|</html>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> <html>|</html>
+                }  
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
